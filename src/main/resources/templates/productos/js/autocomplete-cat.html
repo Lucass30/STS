@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<script type="text/javascript" th:fragment="javascript">
+  $(document).ready(function() {
+    $('#categoria').change(
+            function() {
+              $.getJSON("/subcategoria/cargar", {
+                id : $(this).val(),
+                ajax : 'true'
+              }, function(data) {
+                var html = '<option value="" selected disabled>Seleccione una subcategoria</option>';
+                var len = data.length;
+                for ( var i = 0; i < len; i++) {
+                  html += '<option value="' + data[i].id + '">'
+                          + data[i].nombre + '</option>';
+                }
+                html += '</option>';
+                $('#subcategoria').html(html);
+              });
+            });
+
+  });
+</script>
+</body>
+</html>

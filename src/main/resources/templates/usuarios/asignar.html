@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/layout}">
+<!--Head -->
+<head th:replace="layout/layout :: head"></head>
+<!--End of Head -->
+<body class="g-sidenav-show   bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"  style="background-image: url(../assets/img/inventario.webp); background-position-y: 50%;">
+  <span class="mask bg-primary opacity-6"></span>
+</div>
+
+<!--Sidebar -->
+<aside th:replace="layout/layout :: aside"></aside>
+<!--End of Sidebar -->
+
+<main class="main-content position-relative border-radius-lg ">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+          <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+        </ol>
+        <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+        <ul class="navbar-nav  justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <a th:href="@{/usuario/perfil}"  class="nav-link text-white font-weight-bold px-0">
+              <i class="fa fa-user me-sm-1"></i>
+              <span class="d-sm-inline d-none">Mi Perfil</span>
+            </a>
+          </li>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0">
+              <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+            </a>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="btn btn-outline-info btn-sm mb-0 me-3" target="_blank" th:href="@{/logout}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+
+
+  <div class="container-fluid py-4">
+    <div th:replace="layout/mensajes :: mensajes"></div>
+    <div class="row">
+      <form th:action="@{/usuario/asignar}" th:object="${usuario}" method="post">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <p class="mb-0">Asigación de materiales y herramientas</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <input type="hidden" th:value="${usuario.id}" name="trabajadorId">
+              <p class="text-uppercase text-sm">Información del Usuario</p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Nombres</label>
+                    <input type="text" th:field="*{nombres}" class="form-control" disabled/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Apellidos</label>
+                    <input type="text" th:field="*{apellidos}" class="form-control" disabled/>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Email</label>
+                    <input type="text" th:field="*{email}" class="form-control" disabled/>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Telefono</label>
+                    <input type="text" th:field="*{telefono}" class="form-control" disabled/>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Estado</label>
+                    <input type="text" th:field="*{estado}" class="form-control" disabled/>
+                  </div>
+                </div>
+              </div>
+              <hr class="horizontal dark">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10 col-sm-10 mx-auto my-4">
+          <div class="card my-sm-5 my-lg-0">
+            <div class="card-header text-center">
+              <div class="row justify-content-between">
+                <div class="col-md-4 text-start">
+                  <h6>
+                    Información de Materiales disponibles :
+                  </h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label for="buscar_material" class="form-control-label"
+                               th:text="'Buscar Producto'"></label>
+                        <div class="col-sm-12">
+                          <input type="text" name="buscar_material" id="buscar_material"
+                                 class="form-control" />
+                        </div>
+                      </div>
+
+                      <table th:replace="usuarios/item-productos :: itemsTrabajador"></table>
+
+                      <div class="table-responsive border-radius-lg">
+                        <table  id="cargarItemMaterial" class="table text-right">
+                          <thead class="bg-default">
+                          <tr>
+                            <th scope="col" class="pe-2 text-start ps-2 text-white">NOMBRE</th>
+                            <th scope="col" class="pe-2 text-white" colspan="2">CANTIDAD</th>
+                            <th scope="col" class="pe-2 text-white">ELIMINAR</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer mt-md-5 mt-4">
+                  <div class="row">
+                    <div class="col-lg-7 text-md-end mt-md-0 mt-3">
+                      <a th:href="@{'/usuario/listar'}" class="btn btn-danger">Volver</a>
+                      <button type="submit" class="btn btn-success ">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- Footer -->
+    <footer th:replace="layout/layout :: footer"></footer>
+    <!-- End Footer -->
+  </div>
+</main>
+
+<th:block th:replace="layout/layout :: scripts">
+
+</th:block>
+<th:block layout:fragment="page-scripts">
+  <script th:replace="usuarios/js/autocomplete-productos :: javascript"></script>
+</th:block>
+</body>
+
+</html>
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<script type="text/javascript" th:fragment="javascript">
+    $(document).ready(function() {
+        $('#departamento').change(
+            function() {
+                $.getJSON("/provincias", {
+                    id : $(this).val(),
+                    ajax : 'true'
+                }, function(data) {
+                    var html = '<option value="" selected disabled>Seleccione una provincia</option>';
+                    var len = data.length;
+                    for ( var i = 0; i < len; i++) {
+                        html += '<option value="' + data[i].id + '">'
+                            + data[i].descripcion + '</option>';
+                    }
+                    html += '</option>';
+                    $('#provincia').html(html);
+                    html = '<option value="" selected disabled>Seleccione una provincia</option>';
+                    $('#distrito').html(html);
+                });
+            });
+        $('#provincia').change(
+            function() {
+                $.getJSON("/distritos", {
+                    id : $(this).val(),
+                    ajax : 'true'
+                }, function(data) {
+                    var html = '<option value="" selected disabled>Seleccione un distrito</option>';
+                    var len = data.length;
+                    for ( var i = 0; i < len; i++) {
+                        html += '<option value="' + data[i].id + '">'
+                            + data[i].descripcion + '</option>';
+                    }
+                    html += '</option>';
+                    $('#distrito').html(html);
+                });
+            });
+
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/layout}">
+<!--Head -->
+<head th:replace="layout/layout :: head"></head>
+<!--End of Head -->
+<body class="g-sidenav-show   bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"  style="background-image: url(../assets/img/inventario.webp); background-position-y: 50%;">
+    <span class="mask bg-primary opacity-6"></span>
+</div>
+<!--Sidebar -->
+<aside th:replace="layout/layout :: aside"></aside>
+<!--End of Sidebar -->
+
+<main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+                    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+                </ol>
+                <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+                <ul class="navbar-nav  justify-content-end">
+                    <li class="nav-item d-flex align-items-center">
+                        <a th:href="@{/usuario/perfil}"  class="nav-link text-white font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item px-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0">
+                            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="btn btn-outline-info btn-sm mb-0 me-3" target="_blank" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="container-fluid py-4">
+        <div th:replace="layout/mensajes :: mensajes"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-header pb-0">
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0">Formulario SubCategorias</p>
+                            <a class="btn btn-secondary ms-auto" th:href="@{/subcategoria/form}" >Resetear</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/subcategoria/save}" th:object="${subcategorias}" method="post">
+                            <p class="text-uppercase text-sm">Información de Categoria</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Nombre de Categoria</label>
+                                        <input type="text" th:field="*{nombre}" class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Categoria</label>
+                                        <select id="categoria" name="categoria" class="form-control" required>
+                                            <th:block th:each="categorias: ${categoria}">
+                                                <option th:value="${categorias.id}">[[${categorias.nombre}]]</option>
+                                            </th:block>
+                                        </select>
+                                        <small class="form-text text-danger"
+                                               th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="horizontal dark">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >Descripción</label>
+                                        <textarea type="text" th:field="*{descripcion}" class="form-control" placeholder="Ej. Pertenece al conjunto de elementos para brindar un mejor servicio"
+                                               th:errorclass="'form-control alert-danger'" required/>
+                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}"
+                                               th:errors="*{descripcion}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-5"></div>
+                                <div class="col-4">
+                                    <a th:href="@{'/categoria/listar/'}" class="btn btn-danger">Regresar</a>
+                                    <button type="submit" class="btn btn-success ">Guardar</button>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer th:replace="layout/layout :: footer"></footer>
+        <!-- End Footer -->
+    </div>
+</main>
+
+<th:block th:replace="layout/layout :: scripts">
+</th:block>
+<th:block layout:fragment="page-scripts">
+    <script th:replace="usuarios/js/autocomplete-pd :: javascript"></script>
+</th:block>
+</body>
+
+</html>

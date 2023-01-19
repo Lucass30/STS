@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/layout}">
+<!--Head -->
+<head th:replace="layout/layout :: head"></head>
+<!--End of Head -->
+<body class="g-sidenav-show   bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"  style="background-image: url(../assets/img/inventario.webp); background-position-y: 50%;">
+    <span class="mask bg-primary opacity-6"></span>
+</div>
+
+<!--Sidebar -->
+<aside th:replace="layout/layout :: aside"></aside>
+<!--End of Sidebar -->
+
+<main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+                    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+                </ol>
+                <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+                <ul class="navbar-nav  justify-content-end">
+                    <li class="nav-item d-flex align-items-center">
+                        <a th:href="@{/usuario/perfil}"  class="nav-link text-white font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item px-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0">
+                            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="btn btn-outline-info btn-sm mb-0 me-3" target="_blank" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="container-fluid py-4">
+        <div th:replace="layout/mensajes :: mensajes"></div>
+        <div class="row">
+            <div class="col-md-8 col-sm-10 mx-auto">
+                <form class="" action="index.html" method="post">
+                    <div class="card my-sm-5 my-lg-0">
+                        <div class="card-header text-center">
+                            <div class="row justify-content-between">
+                                <div class="col-md-4 text-start">
+                                    <img th:if="${ordenCompra.proveedor.logo==null}" th:src="@{/assets/img/categoria.jpg}" height="100" width="240">
+                                    <img th:if="${ordenCompra.proveedor.logo!=null}" th:src="@{'/proveedor/uploads/'+${ordenCompra.proveedor.logo}}" th:alt="${ordenCompra.proveedor.logo}" height="100" width="240">
+                                    <!--<img class="mb-2 w-25 p-2" src="../../../assets/img/logo-ct-dark.png" alt="Logo">-->
+                                    <h6 th:text="${ordenCompra.proveedor.direccion}">
+                                    </h6>
+                                    <p class="d-block text-secondary" th:text="${ordenCompra.proveedor.telefono}"></p>
+                                </div>
+                                <div class="col-lg-3 col-md-7 text-md-end text-start mt-5">
+                                    <h6 class="d-block mt-2 mb-0">Pedido por:</h6>
+                                    <p class="text-secondary">Botica Vida&Salud<br>
+                                        El Porvenir<br>
+                                        Trujillo
+                                    </p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row justify-content-md-between">
+                                <div class="col-md-4 mt-auto">
+                                    <h6 class="mb-0 text-start text-secondary">
+                                        Orden Compra:
+                                    </h6>
+                                    <h5 class="text-start mb-0" th:text="${'#0000'+ordenCompra.id}">
+                                    </h5>
+                                </div>
+                                <div class="col-lg-5 col-md-7 mt-auto">
+                                    <div class="row mt-md-5 mt-4 text-md-end text-start">
+                                        <div class="col-md-6">
+                                            <h6 class="text-secondary mb-0">Fecha Creación:</h6>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="text-dark mb-0"th:text="${ordenCompra.createAt}"></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row text-md-end text-start">
+                                        <div class="col-md-6">
+                                            <h6 class="text-secondary mb-0">Fecha Entrega:</h6>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="text-dark mb-0"th:text="${ordenCompra.fechaLLegada}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-info my-4"
+                                         th:if="${#lists.isEmpty(ordenCompra.itemProveedor)}"
+                                         th:text="'No hay l�neas para la factura' + ${ordenCompra.descripcion}"></div>
+                                    <div class="table-responsive border-radius-lg">
+                                        <table  th:if="${not #lists.isEmpty(ordenCompra.itemProveedor)}"
+                                                class="table text-right">
+                                            <thead class="bg-default">
+                                            <tr>
+                                                <th scope="col" class="pe-2 text-start ps-2 text-white">Item</th>
+                                                <th scope="col" class="pe-2 text-white">Precio</th>
+                                                <th scope="col" class="pe-2 text-white" colspan="2">Cantidad</th>
+                                                <th scope="col" class="pe-2 text-white">Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="linea: ${ordenCompra.itemProveedor}">
+                                                <td class="text-start" th:text="${linea.producto.nombre}"></td>
+                                                <td class="ps-4"th:text="${linea.producto.preciocompra}"></td>
+                                                <td class="ps-4" colspan="2" th:text="${linea.cantidad}"></td>
+                                                <td class="ps-4" th:text="${linea.calcularImporte()}"></td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th class="h5 ps-4" colspan="2">Total</th>
+                                                <th colspan="1" class="text-right h5 ps-4" th:text="${ordenCompra.total}"></th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer mt-md-5 mt-4">
+                            <div class="row">
+                                <div class="col-lg-5 text-left">
+                                    <h5>Descripción</h5>
+                                    <p class="text-secondary text-sm"th:text="${ordenCompra.descripcion}"
+                                       th:if="${not #strings.isEmpty(ordenCompra.descripcion)}"></p>
+                                    <h6 class="text-secondary mb-0">
+                                        email:
+                                        <span class="text-dark">support@creative-tim.com</span>
+                                    </h6>
+                                </div>
+                                <div class="col-lg-7 text-md-end mt-md-0 mt-3">
+                                    <a th:href="@{/proveedor/ver/} + ${ordenCompra.proveedor.id}"  class="btn btn-danger btn-fill pull-right">Regresar</a>
+                                    <button class="btn btn-primary mt-lg-7 mb-0" onclick="window.print()" type="button" name="button">Imprimir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer th:replace="layout/layout :: footer"></footer>
+        <!-- End Footer -->
+    </div>
+</main>
+
+<th:block th:replace="layout/layout :: scripts">
+
+</th:block>
+<th:block layout:fragment="page-scripts">
+    <script th:replace="ordenescompra/js/autocomplete-productos :: javascript"></script>
+</th:block>
+</body>
+
+</html>
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<script type="text/javascript" th:fragment="javascript">
+    $(document).ready(function() {
+
+        $("#buscar_material").autocomplete({
+
+            source : function(request, response) {
+                $.ajax({
+                    url : "/usuario/cargar-productos/"+ request.term ,
+                    dataType : "json",
+                    data : {
+                        term : request.term,
+                    },
+                    success : function(data) {
+
+                        response($.map(data, function(item) {
+                            return {
+                                value : item.id,
+                                label : item.nombre,
+                            };
+                        }));
+                    },
+                });
+            },
+            select : function(event, ui) {
+                //$("#buscar_material").val(ui.item.label);
+
+                if(itemsHelper.hasMaterial(ui.item.value)){
+                    itemsHelper.incrementaCantidad(ui.item.value);
+                    return false;
+                }
+
+                var linea = $("#plantillaItemsTrabajador").html();
+
+                linea = linea.replace(/{ID}/g, ui.item.value);
+                linea = linea.replace(/{MATERIAL}/g, ui.item.label);
+
+                $("#cargarItemMaterial tbody").append(linea);
+
+                return false;
+            }
+        });
+
+        $("form").submit(function(){
+            $("#plantillaItemsTrabajador").remove();
+            return;
+        });
+
+    });
+
+    var itemsHelper = {
+        hasMaterial: function(id){
+
+            var resultado = false;
+
+            $('input[name="item_id[]"]').each(function(){
+                if(parseInt(id) == parseInt($(this).val()) ){
+                    resultado = true;
+                }
+            });
+
+            return resultado;
+        },
+        incrementaCantidad: function(id){
+            var cantidad = $("#cantidad_" + id).val() ? parseInt($("#cantidad_" + id).val()) : 0;
+            $("#cantidad_" + id).val(++cantidad);
+        },
+        eliminarLineaPelicula: function(id){
+            $("#row_" + id).remove();
+        },
+    }
+</script>
+</body>
+</html>

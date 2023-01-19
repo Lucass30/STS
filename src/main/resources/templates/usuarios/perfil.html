@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/layout}">
+<!--Head -->
+<head th:replace="layout/layout :: head"></head>
+<!--End of Head -->
+<body class="g-sidenav-show   bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"  style="background-image: url(../assets/img/inventario.webp); background-position-y: 50%;">
+  <span class="mask bg-primary opacity-6"></span>
+</div>
+
+<!--Sidebar -->
+<aside th:replace="layout/layout :: aside"></aside>
+<!--End of Sidebar -->
+
+<main class="main-content position-relative border-radius-lg ">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+          <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+        </ol>
+        <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+        <ul class="navbar-nav  justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <a th:href="@{/usuario/perfil}"  class="nav-link text-white font-weight-bold px-0">
+              <i class="fa fa-user me-sm-1"></i>
+              <span class="d-sm-inline d-none">Mi Perfil</span>
+            </a>
+          </li>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0">
+              <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+            </a>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="btn btn-outline-info btn-sm mb-0 me-3" target="_blank" th:href="@{/logout}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card" th:object="${usuario}">
+          <div class="card-header pb-0">
+            <div class="d-flex align-items-center">
+              <p class="mb-0">Mi Perfil :</p>
+              <a class="btn btn-primary btn-sm ms-auto" th:href="@{/usuario/form/} + ${usuario.id}">Editar</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="text-uppercase text-sm">Información de Usuario</p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label  class="form-control-label">Rol</label>
+                  <select class="form-control"  name="rol_id" disabled >
+                    <option disabled selected>Seleccione una opción...</option>
+                    <th:block th:if="${!usuario.roles.isEmpty()}">
+                      <th:block th:each="rol:${roles}">
+                        <option th:selected="${usuario.roles.get(0).id==rol.id}"  th:value="${rol.id}" th:text="${rol.descripcion}"></option>
+                      </th:block>
+                    </th:block>
+                    <th:block th:if="${usuario.roles.isEmpty()}">
+                      <th:block th:each="rol:${roles}">
+                        <option th:value="${rol.id}" th:text="${rol.descripcion}"></option>
+                      </th:block>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label  class="form-control-label">Email</label>
+                  <input type="email" th:field="*{email}" class="form-control" disabled/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Nombres</label>
+                  <input type="text" th:field="*{nombres}" class="form-control" disabled/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Apellidos</label>
+                  <input type="text" th:field="*{apellidos}" class="form-control" disabled/>
+                </div>
+              </div>
+            </div>
+            <hr class="horizontal dark">
+            <p class="text-uppercase text-sm">Información de Contacto</p>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label  class="form-control-label">Dirección</label>
+                  <input type="text" th:field="*{direccion}" class="form-control" disabled/>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label">Departamento</label>
+                  <select th:field="*{distrito.provincia.departamento.id}"  class="form-control" name="departamento" id="departamento" disabled>
+                    <option value="" selected disabled>Seleccione un departamento</option>
+                    <th:block th:each="departamento: ${departamentos}">
+                      <option th:value="${departamento.id}">[[${departamento.descripcion}]]</option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label">Provincia</label>
+                  <select th:field="*{distrito.provincia.id}" class="form-control" name="provincia" id="provincia" disabled>
+                    <th:block  th:each="provincia: ${provincias}">
+                      <option th:value="${provincia.id}">[[${provincia.descripcion}]]</option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label">Postal code</label>
+                  <input type="text" th:field="*{codPostal}" class="form-control" disabled/>
+                </div>
+              </div>
+            </div>
+            <hr class="horizontal dark">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-profile">
+          <img th:src="@{/assets/img/bg-profile.jpg}" alt="Image placeholder" class="card-img-top">
+          <div class="row justify-content-center">
+            <div class="col-4 col-lg-4 order-lg-2">
+              <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                <a href="javascript:;">
+                  <img th:if="${usuario.foto==null}" th:src="@{/assets/img/default-avatar.png}" class=" w-100 border-radius rounded-circle img-fluid border border-2 border-white">
+                  <img th:if="${usuario.foto!=null}" th:src="@{'/usuario/uploads/'+${usuario.foto}}" th:alt="${usuario.foto}" class="rounded-circle img-fluid border border-2 border-white">
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+            <div class="d-flex justify-content-between">
+              <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Connect</a>
+              <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
+              <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Message</a>
+              <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
+            </div>
+          </div>
+          <div class="card-body pt-0">
+            <div class="row">
+              <div class="col">
+                <div class="d-flex justify-content-center">
+                  <div class="d-grid text-center">
+                    <span class="text-lg font-weight-bolder">22</span>
+                    <span class="text-sm opacity-8">Friends</span>
+                  </div>
+                  <div class="d-grid text-center mx-4">
+                    <span class="text-lg font-weight-bolder">10</span>
+                    <span class="text-sm opacity-8">Photos</span>
+                  </div>
+                  <div class="d-grid text-center">
+                    <span class="text-lg font-weight-bolder">89</span>
+                    <span class="text-sm opacity-8">Comments</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <h5 th:text="${usuario.nombres + ' ' + usuario.apellidos}">
+                <span class="font-weight-light"></span>
+              </h5>
+              <div class="h6 font-weight-300" th:text="${'Perú, '+ usuario.distrito.provincia.descripcion}" >
+                <i class="ni location_pin mr-2"></i>
+              </div>
+              <div class="h6 mt-4">
+                <i class="ni business_briefcase-24 mr-2"></i>"Brindando el mejor servicio ante los problemas" <i class="fa fa-heart"></i>  - Disfruta
+              </div>
+              <div>
+                <i class="ni education_hat mr-2"></i>Grupo STS
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer th:replace="layout/layout :: footer"></footer>
+    <!-- End Footer -->
+  </div>
+</main>
+
+<th:block th:replace="layout/layout :: scripts">
+</th:block>
+<th:block layout:fragment="page-scripts">
+  <script th:replace="usuarios/js/autocomplete-pd :: javascript"></script>
+</th:block>
+</body>
+
+</html>

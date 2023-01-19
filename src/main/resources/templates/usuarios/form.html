@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/layout}">
+<!--Head -->
+<head th:replace="layout/layout :: head"></head>
+<!--End of Head -->
+<body class="g-sidenav-show   bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"  style="background-image: url(../assets/img/inventario.webp); background-position-y: 50%;">
+    <span class="mask bg-primary opacity-6"></span>
+</div>
+
+<!--Sidebar -->
+<aside th:replace="layout/layout :: aside"></aside>
+<!--End of Sidebar -->
+
+<main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+                    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+                </ol>
+                <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+                <ul class="navbar-nav  justify-content-end">
+                    <li class="nav-item d-flex align-items-center">
+                        <a th:href="@{/usuario/perfil}"  class="nav-link text-white font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item px-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0">
+                            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="btn btn-outline-info btn-sm mb-0 me-3" target="_blank" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="container-fluid py-4">
+        <div th:replace="layout/mensajes :: mensajes"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-header pb-0">
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0">Formulario Usuario</p>
+                            <a class="btn btn-secondary ms-auto" th:href="@{/usuario/form}" >Resetear</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/usuario/save}" th:object="${usuario}" method="post" enctype="multipart/form-data">
+                            <p class="text-uppercase text-sm">Información de Seguridad</p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Rol</label>
+                                        <select id="roles" class="form-control" name="rol_id" >
+                                            <option selected disabled>Elija una opcion</option>
+                                            <th:block th:each="rol:${roles}" >
+                                                <option th:value="${rol.id}" th:text="${rol.descripcion}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Email</label>
+                                        <input type="email" th:field="*{email}" class="form-control"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Contraseña</label>
+                                        <input type="password" th:field="*{password}" class="form-control"
+                                               placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                               th:errorclass="'form-control alert-danger'" required/>
+                                        <small class="form-text text-danger"
+                                               th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">Información de Contacto </p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Foto</label>
+                                        <input type="file" name="file" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Teléfono</label>
+                                        <input type="number" th:field="*{telefono}" class="form-control"
+                                               placeholder="Ingrese su telefono"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >DNI</label>
+                                        <input type="number" th:field="*{dni}" class="form-control"
+                                               placeholder="Ingrese su dni"
+                                               th:errorclass="'form-control alert-danger'" /> <small
+                                            class="form-text text-danger"
+                                            th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">Información Personal</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >Nombres</label>
+                                        <input type="text" th:field="*{nombres}" class="form-control" placeholder="Ej. Maria Gabriela"
+                                               th:errorclass="'form-control alert-danger'" required/>
+                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('nombres')}"
+                                               th:errors="*{nombres}"></small>                                            </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >Apellidos</label>
+                                        <input type="text" th:field="*{apellidos}" class="form-control" placeholder="Ej. Ramirez Garcia"
+                                               th:errorclass="'form-control alert-danger'" required/>
+                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('apellidos')}"
+                                               th:errors="*{apellidos}"></small>                                            </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >Dirección</label>
+                                        <input type="text" th:field="*{direccion}" class="form-control" placeholder="Ej. Av. Jesús de Nazareth 128 Trujillo La Libertad"
+                                               th:errorclass="'form-control alert-danger'" required/>
+                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('direccion')}"
+                                               th:errors="*{direccion}"></small>                                             </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >Cod. Postal</label>
+                                        <input type="text" th:field="*{codPostal}" class="form-control" placeholder="Ej. 13009"
+                                               th:errorclass="'form-control alert-danger'" required/>
+                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('codPostal')}"
+                                               th:errors="*{codPostal}"></small>                                             </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="choices__list--dropdown">
+                                        <label class="form-control-label" >Departamento</label>
+                                        <select   class="form-control" name="departamento" id="departamento" >
+                                            <option value="" selected disabled>Seleccione un departamento</option>
+                                            <th:block th:each="departamento: ${departamentos}">
+                                                <option th:value="${departamento.id}">[[${departamento.descripcion}]]</option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="choices__list--dropdown">
+                                        <label class="form-control-label" >Provincia</label>
+                                        <select class="form-control" name="provincia" id="provincia">
+                                            <option value="" selected disabled>Seleccione un departamento</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="choices__list--dropdown">
+                                        <label class="form-control-label" >Distrito</label>
+                                        <select  th:field="*{distrito.id}" class="form-control"name="distrito" id="distrito">
+                                            <option value="" selected disabled>Seleccione un departamento</option>
+                                        </select>
+                                        <small class="form-text text-danger"
+                                               th:if="${#fields.hasErrors('distrito')}" th:errors="*{distrito}"></small>                                            </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-5"></div>
+                                <div class="col-4">
+                                    <a th:href="@{'/usuario/listar'}" class="btn btn-danger">Regresar</a>
+                                    <button type="submit" class="btn btn-success ">Guardar</button>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer th:replace="layout/layout :: footer"></footer>
+        <!-- End Footer -->
+    </div>
+</main>
+
+<th:block th:replace="layout/layout :: scripts">
+</th:block>
+<th:block layout:fragment="page-scripts">
+    <script th:replace="usuarios/js/autocomplete-pd :: javascript"></script>
+</th:block>
+</body>
+
+</html>

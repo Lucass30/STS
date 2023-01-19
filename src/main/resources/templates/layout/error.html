@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class=""><head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/logo_sts.png}">
+  <link rel="icon" type="image/png" th:href="@{/assets/img/logo_sts.png}">
+  <title>
+    Grupo STS
+  </title>
+  <link rel="canonical" href="https://www.creative-tim.com/product/argon-dashboard-pro">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link th:href="@{/assets/css/nucleo-icons.css}" rel="stylesheet" />
+  <link th:href="@{/assets/css/nucleo-svg.css}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link th:href="@{/assets/css/nucleo-svg.css}" rel="stylesheet">
+
+  <link id="pagestyle" th:href="@{/assets/css/argon-dashboard.min.css?v=2.0.5}" rel="stylesheet">
+
+</head>
+<body class="error-page">
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div class="container position-sticky z-index-sticky top-0">
+  <div class="row">
+    <div class="col-12">
+      <main class="main-content mt-0 ps">
+        <div class="page-header min-vh-100" style="background-image: url(/../assets/img/illustrations/fondo_login.jfif);">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-lg-6 col-md-7 mx-auto text-center">
+                <h1 class="display-1 text-bolder text-primary">Error 404</h1>
+                <h2>Pagina no Encontrada</h2>
+                <p class="lead">Por favor regresa a la pagina principal e intenta con otra opción.</p>
+                <a type="button" class="btn bg-gradient-dark mt-4" th:href="@{/}">Ir a Inicio</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+          <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+          </div>
+        </div>
+        <div class="ps__rail-y" style="top: 0px; right: 0px;">
+          <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/plugins/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/smooth-scrollbar.min.js}"></script>
+
+<script th:src="@{/assets/js/plugins/dragula/dragula.min.js}"></script>
+<script th:src="@{/assets/js/plugins/jkanban/jkanban.js}"></script>
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
+
+<script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
+
+<script th:src="@{/assets/js/argon-dashboard.min.js?v=2.0.5}"></script>
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon="{&quot;rayId&quot;:&quot;7844479dfe0bb3d9&quot;,&quot;version&quot;:&quot;2022.11.3&quot;,&quot;r&quot;:1,&quot;token&quot;:&quot;1b7cbb72744b40c580f8633c6b62637e&quot;,&quot;si&quot;:100}" crossorigin="anonymous"></script>
+</body>
+</html>

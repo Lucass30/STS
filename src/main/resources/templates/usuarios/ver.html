@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/layout}">
+<!--Head -->
+<head th:replace="layout/layout :: head"></head>
+<!--End of Head -->
+<body class="g-sidenav-show   bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"  style="background-image: url(../assets/img/inventario.webp); background-position-y: 50%;">
+  <span class="mask bg-primary opacity-6"></span>
+</div>
+
+<!--Sidebar -->
+<aside th:replace="layout/layout :: aside"></aside>
+<!--End of Sidebar -->
+
+<main class="main-content position-relative border-radius-lg ">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+          <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+        </ol>
+        <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+        <ul class="navbar-nav  justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <a th:href="@{/usuario/perfil}"  class="nav-link text-white font-weight-bold px-0">
+              <i class="fa fa-user me-sm-1"></i>
+              <span class="d-sm-inline d-none">Mi Perfil</span>
+            </a>
+          </li>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0">
+              <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+            </a>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="btn btn-outline-info btn-sm mb-0 me-3" target="_blank" th:href="@{/logout}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" th:object="${usuario}">
+          <div class="card-header pb-0">
+            <div class="d-flex align-items-center">
+              <p class="mb-0">Mi Perfil :</p>
+              <a class="btn btn-primary btn-sm ms-auto" th:href="@{/usuario/form/} + ${usuario.id}">Editar</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="text-uppercase text-sm">Información de Usuario</p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label  class="form-control-label">Rol</label>
+                  <select class="form-control"  name="rol_id" disabled >
+                    <option disabled selected>Seleccione una opción...</option>
+                    <th:block th:if="${!usuario.roles.isEmpty()}">
+                      <th:block th:each="rol:${roles}">
+                        <option th:selected="${usuario.roles.get(0).id==rol.id}"  th:value="${rol.id}" th:text="${rol.descripcion}"></option>
+                      </th:block>
+                    </th:block>
+                    <th:block th:if="${usuario.roles.isEmpty()}">
+                      <th:block th:each="rol:${roles}">
+                        <option th:value="${rol.id}" th:text="${rol.descripcion}"></option>
+                      </th:block>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label  class="form-control-label">Email</label>
+                  <input type="email" th:field="*{email}" class="form-control" disabled/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Nombres</label>
+                  <input type="text" th:field="*{nombres}" class="form-control" disabled/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Apellidos</label>
+                  <input type="text" th:field="*{apellidos}" class="form-control" disabled/>
+                </div>
+              </div>
+            </div>
+            <hr class="horizontal dark">
+            <p class="text-uppercase text-sm">Información de Contacto</p>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label  class="form-control-label">Dirección</label>
+                  <input type="text" th:field="*{direccion}" class="form-control" disabled/>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label">Departamento</label>
+                  <select th:field="*{distrito.provincia.departamento.id}"  class="form-control" name="departamento" id="departamento" disabled>
+                    <option value="" selected disabled>Seleccione un departamento</option>
+                    <th:block th:each="departamento: ${departamentos}">
+                      <option th:value="${departamento.id}">[[${departamento.descripcion}]]</option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label">Provincia</label>
+                  <select th:field="*{distrito.provincia.id}" class="form-control" name="provincia" id="provincia" disabled>
+                    <th:block  th:each="provincia: ${provincias}">
+                      <option th:value="${provincia.id}">[[${provincia.descripcion}]]</option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label">Postal code</label>
+                  <input type="text" th:field="*{codPostal}" class="form-control" disabled/>
+                </div>
+              </div>
+            </div>
+            <hr class="horizontal dark">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row my-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="d-flex align-items-center">
+              <p class="mb-0">Listado de Tareas:</p>
+            </div>
+          </div>
+
+          <div th:if="${#lists.isEmpty(usuario.items)}"
+               class="alert alert-info my-4"
+               th:text="'No hay tareas para el Empleado ' + ${usuario.nombres}"></div>
+
+          <div class="table-responsive">
+            <table th:if="${not #lists.isEmpty(usuario.items)}" class="table align-items-center mb-0">
+              <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Folio</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Descripción</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Estado</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ver</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="orden: ${usuario.items}">
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm" th:text="${'#00'+orden.id + ' Fecha Tarea :'+ orden.createAt}"></h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-sm text-secondary mb-0"th:text="${orden.descripcion}"></p>
+                </td>
+                <td>
+                  <span class="badge badge-dot me-4">
+                    <i class="bg-info"></i>
+                    <span class="text-dark text-xs" th:text="${orden.estado}"></span>
+                  </span>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  <p class="text-secondary mb-0 text-sm" th:text="${'S/.'+ orden.precio}"></p>
+                </td>
+                <td class="align-middle text-center">
+                  <a class="btn btn-success btn-sm" th:href="@{'/tarea/ver/' + ${orden.id}}" th:text="'Detalle'"></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row my-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="d-flex align-items-center">
+              <p class="mb-0">Materiales Asignados</p>
+            </div>
+          </div>
+          <div th:if="${#lists.isEmpty(usuario.itemUsuarios)}"
+               class="alert alert-info my-4"
+               th:text="'No hay materiales asignados a  ' + ${usuario.nombres}"></div>
+
+          <div class="table-responsive">
+            <table th:if="${not #lists.isEmpty(usuario.itemUsuarios)}" class="table align-items-center mb-0">
+              <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Descripción</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Cantidad</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Entregar</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="productos: ${usuario.itemUsuarios}">
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm" th:text="${'#'+ productos.id}"></h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-sm text-secondary mb-0"th:text="${productos.producto.nombre}"></p>
+                </td>
+                <td>
+                  <p class="text-sm text-secondary mb-0"th:text="${productos.cantidad}"></p>
+                </td>
+                <td class="align-middle text-center">
+                  <a class="btn btn-danger btn-sm" th:href="@{'/producto/entregar/' + ${productos.id}}" th:text="'Entregar'"
+                     onclick="return confirm('¿Estas seguro que desea entregar el Material?');"></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer th:replace="layout/layout :: footer"></footer>
+    <!-- End Footer -->
+  </div>
+</main>
+
+<th:block th:replace="layout/layout :: scripts">
+</th:block>
+<th:block layout:fragment="page-scripts">
+  <script th:replace="usuarios/js/autocomplete-pd :: javascript"></script>
+</th:block>
+</body>
+
+</html>

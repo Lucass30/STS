@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout/layout}">
+<!--Head -->
+<head th:replace="layout/layout :: head"></head>
+<!--End of Head -->
+<body class="g-sidenav-show   bg-gray-100">
+<div class="position-absolute w-100 min-height-300 top-0"  style="background-image: url(../assets/img/inventario.webp); background-position-y: 50%;">
+    <span class="mask bg-primary opacity-6"></span>
+</div>
+<!--Sidebar -->
+<aside th:replace="layout/layout :: aside"></aside>
+<!--End of Sidebar -->
+
+<main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+                    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+                </ol>
+                <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+                <ul class="navbar-nav  justify-content-end">
+                    <li class="nav-item d-flex align-items-center">
+                        <a th:href="@{/usuario/perfil}"  class="nav-link text-white font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                                <i class="sidenav-toggler-line bg-white"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item px-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-white p-0">
+                            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="btn btn-outline-info btn-sm mb-0 me-3" target="_blank" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="container-fluid py-4">
+        <div th:replace="layout/mensajes :: mensajes"></div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                <div class="card h-100">
+                    <div class="card-header pb-0 p-3">
+                        <h6 class="mb-0" th:text="${'Información Proveedor : '+ proveedor.nombre}"></h6>
+                    </div>
+                    <div class="card-body pb-0 p-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Ruc</label>
+                                    <input type="text" th:field="*{proveedor.ruc}" class="form-control" disabled/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Telefono</label>
+                                    <input type="text" th:field="*{proveedor.telefono}" class="form-control" disabled/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Email</label>
+                                    <input type="text" th:field="*{proveedor.email}" class="form-control" disabled/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label">Dirección</label>
+                                    <input type="text" th:field="*{proveedor.direccion}" class="form-control" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer pt-0 p-3 d-flex align-items-center">
+                        <div class="w-60">
+                            <a th:href="@{'/ordencompra/form/' + ${proveedor.id}}" class="btn bg-gradient-success mb-0 text-end">Crear Orden de Compra</a>
+                        </div>
+                        <div class="w-40 text-end">
+                            <a class="btn bg-gradient-dark mb-0 text-end" th:href="@{/proveedor/form/} + ${proveedor.id}">Editar Proveedor</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="card overflow-hidden shadow-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reports1.jpg');
+                             background-size: cover;">
+                            <span class="mask bg-gradient-dark"></span>
+                            <div class="card-body p-3 position-relative">
+                                <div class="row">
+                                    <div class="col-8 text-start">
+                                        <div class="icon icon-shape bg-white shadow text-center border-radius-md">
+                                            <i class="ni ni-circle-08 text-dark text-lg opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                        </h5>
+                                        <span class="text-white text-sm">Ordenes Creadas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
+                        <div class="card overflow-hidden shadow-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reports2.jpg');
+                             background-size: cover;">
+                            <span class="mask bg-gradient-dark"></span>
+                            <div class="card-body p-3 position-relative">
+                                <div class="row">
+                                    <div class="col-8 text-start">
+                                        <div class="icon icon-shape bg-white shadow text-center border-radius-md">
+                                            <i class="ni ni-like-2 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                        </h5>
+                                        <span class="text-white text-sm">Ordenes Aprobadas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="card overflow-hidden shadow-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reports3.jpg');
+                                background-size: cover;">
+                            <span class="mask bg-gradient-dark"></span>
+                            <div class="card-body p-3 position-relative">
+                                <div class="row">
+                                    <div class="col-8 text-start">
+                                        <div class="icon icon-shape bg-white shadow text-center border-radius-md">
+                                            <i class="ni ni-active-40 text-dark text-lg opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                        </h5>
+                                        <span class="text-white text-sm">Ordenes Enviadas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
+                        <div class="card overflow-hidden shadow-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reports4.jpg');
+                            background-size: cover;">
+                            <span class="mask bg-gradient-dark"></span>
+                            <div class="card-body p-3 position-relative">
+                                <div class="row">
+                                    <div class="col-8 text-start">
+                                        <div class="icon icon-shape bg-white shadow text-center border-radius-md">
+                                            <i class="ni ni-cart text-dark text-lg opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="text-white font-weight-bolder mb-0 mt-3" >
+                                        </h5>
+                                        <span class="text-white text-sm">Ordenes Recibidas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-12">
+                <div class="card">
+                    <div th:if="${#lists.isEmpty(proveedor.ordenCompras)}"
+                         class="alert alert-info my-4"
+                         th:text="'No hay ordenes de compra hechas al proveedor ' + ${proveedor.nombre}"></div>
+
+                    <div class="table-responsive">
+                        <table th:if="${not #lists.isEmpty(proveedor.ordenCompras)}" class="table align-items-center mb-0">
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Folio</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Descripción</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Estado</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ver</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Eliminar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="orden: ${proveedor.ordenCompras}">
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm" th:text="${'#00'+orden.id + ' Fecha Envio :'+ orden.createAt}"></h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="text-sm text-secondary mb-0"th:text="${orden.descripcion}"></p>
+                                </td>
+                                <td>
+                                    <span class="badge badge-dot me-4">
+                                    <i class="bg-info"></i>
+                                    <span class="text-dark text-xs">positive</span>
+                                    </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <p class="text-secondary mb-0 text-sm" th:text="${'S/.'+ orden.total}"></p>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <a class="btn btn-success btn-sm" th:href="@{'/ordencompra/ver/' + ${orden.id}}" th:text="'Detalle'"></a>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <a class="btn btn-danger btn-sm" th:href="@{'/ordencompra/eliminar/' + ${orden.id}}" th:text="'Eliminar'"
+                                       onclick="return confirm('¿Estas seguro que desea eliminar la Orden de Compra?');"></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer th:replace="layout/layout :: footer"></footer>
+        <!-- End Footer -->
+    </div>
+</main>
+
+<th:block th:replace="layout/layout :: scripts">
+</th:block>
+<th:block layout:fragment="page-scripts">
+
+</th:block>
+</body>
+
+</html>
